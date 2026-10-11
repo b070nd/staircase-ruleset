@@ -1,0 +1,16 @@
+name: staircase admission
+# pull_request_target runs the workflow of the BASE branch, so a pull request cannot edit the check it must pass. Nothing of the pull
+# request is executed: it is checked out only so that the verifier can read its commits, and the key is read from the base.
+on: pull_request_target
+permissions:
+  contents: read
+  attestations: read
+jobs:
+  staircase-admission:
+    name: staircase-admission
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.event.pull_request.head.sha }}", fetch-depth: 0 }
+      - uses: b070nd/stAirCase@v1.0.0
+        with: { key: .github/staircase.pub, rebuild: "true", min-cal: "2" }

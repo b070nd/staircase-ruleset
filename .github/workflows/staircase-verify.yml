@@ -1,0 +1,50 @@
+name: stAirCase verify (ruleset fixture)
+on: pull_request
+permissions:
+  contents: read
+  attestations: read
+jobs:
+  certified-range-passes:
+    if: github.head_ref == 'pr-certified' && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: b070nd/stAirCase@v1.0.0
+        with: { key: .github/staircase.pub, rebuild: "true", min-cal: "2" }
+  below-the-required-level-is-refused:
+    if: github.head_ref == 'pr-low-assurance'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - id: verify
+        continue-on-error: true
+        uses: b070nd/stAirCase@v1.0.0
+        with: { key: .github/staircase.pub, min-cal: "4" }
+      - name: The Action must have refused
+        run: test "${{ steps.verify.outcome }}" = failure
+  no-certificate-is-refused:
+    if: github.head_ref == 'pr-no-notes'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - id: verify
+        continue-on-error: true
+        uses: b070nd/stAirCase@v1.0.0
+        with: { key: .github/staircase.pub }
+      - name: The Action must have refused
+        run: test "${{ steps.verify.outcome }}" = failure
+  wrong-trusted-key-is-refused:
+    if: github.head_ref == 'pr-certified' && github.base_ref == 'other-key'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - id: verify
+        continue-on-error: true
+        uses: b070nd/stAirCase@v1.0.0
+        with: { key: .github/staircase.pub }
+      - name: The Action must have refused
+        run: test "${{ steps.verify.outcome }}" = failure
