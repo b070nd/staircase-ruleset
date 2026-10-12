@@ -1,3 +1,3 @@
 # app
 
-Status: draft
+Status: greeted - see GREETING.md
