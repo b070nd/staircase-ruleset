@@ -10,6 +10,7 @@ jobs:
     name: staircase-admission
     runs-on: ubuntu-latest
     steps:
+      - run: echo "WORKFLOW_REF=${{ github.workflow_ref }} SHA=${{ github.sha }} REF=${{ github.ref }} BASE=${{ github.base_ref }} MIN_CAL_IN_FILE=4"
       - uses: actions/checkout@v4
         with: { ref: "${{ github.event.pull_request.head.sha }}", fetch-depth: 0 }
       - uses: b070nd/stAirCase@e673581e5c3a10ec3a92895e71c51faec230f2c8
