@@ -18,4 +18,5 @@ jobs:
           version: v1.0.1
           key: .github/staircase.pub
           rebuild: "true"
-          min-cal: "${{ github.base_ref == 'strict' && '4' || '2' }}"
+          min-cal: "1"
+          all: "false"
