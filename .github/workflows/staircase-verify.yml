@@ -10,8 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-      - uses: b070nd/stAirCase@v1.0.0
-        with: { key: .github/staircase.pub, rebuild: "true", min-cal: "2" }
+      - uses: b070nd/stAirCase@e673581e5c3a10ec3a92895e71c51faec230f2c8
+        with: { version: v1.0.0, key: .github/staircase.pub, rebuild: "true", min-cal: "2" }
   below-the-required-level-is-refused:
     if: github.head_ref == 'pr-low-assurance'
     runs-on: ubuntu-latest
@@ -20,8 +20,8 @@ jobs:
         with: { fetch-depth: 0 }
       - id: verify
         continue-on-error: true
-        uses: b070nd/stAirCase@v1.0.0
-        with: { key: .github/staircase.pub, min-cal: "4" }
+        uses: b070nd/stAirCase@e673581e5c3a10ec3a92895e71c51faec230f2c8
+        with: { version: v1.0.0, key: .github/staircase.pub, min-cal: "4" }
       - name: The Action must have refused
         run: test "${{ steps.verify.outcome }}" = failure
   no-certificate-is-refused:
@@ -32,8 +32,8 @@ jobs:
         with: { fetch-depth: 0 }
       - id: verify
         continue-on-error: true
-        uses: b070nd/stAirCase@v1.0.0
-        with: { key: .github/staircase.pub }
+        uses: b070nd/stAirCase@e673581e5c3a10ec3a92895e71c51faec230f2c8
+        with: { version: v1.0.0, key: .github/staircase.pub }
       - name: The Action must have refused
         run: test "${{ steps.verify.outcome }}" = failure
   wrong-trusted-key-is-refused:
@@ -44,7 +44,7 @@ jobs:
         with: { fetch-depth: 0 }
       - id: verify
         continue-on-error: true
-        uses: b070nd/stAirCase@v1.0.0
-        with: { key: .github/staircase.pub }
+        uses: b070nd/stAirCase@e673581e5c3a10ec3a92895e71c51faec230f2c8
+        with: { version: v1.0.0, key: .github/staircase.pub }
       - name: The Action must have refused
         run: test "${{ steps.verify.outcome }}" = failure
