@@ -1,0 +1,21 @@
+name: staircase admission
+# pull_request_target runs the workflow of the DEFAULT branch whatever the pull request's base, so a pull request cannot edit the
+# check it must pass, and this one copy decides for every base: min-cal is chosen from the base branch's name. The pull request is
+# checked out only so that the verifier can read its commits (nothing of it is executed); the key is read from the base branch.
+on: pull_request_target
+permissions:
+  contents: read
+  attestations: read
+jobs:
+  staircase-admission:
+    name: staircase-admission
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.event.pull_request.head.sha }}", fetch-depth: 0 }
+      - uses: b070nd/stAirCase@v1.0.1
+        with:
+          version: v1.0.1
+          key: .github/staircase.pub
+          rebuild: "true"
+          min-cal: "${{ github.base_ref == 'strict' && '4' || '2' }}"
