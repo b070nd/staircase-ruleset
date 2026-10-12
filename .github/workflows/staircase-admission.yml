@@ -12,5 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { ref: "${{ github.event.pull_request.head.sha }}", fetch-depth: 0 }
-      - uses: b070nd/stAirCase@v1.0.0
-        with: { key: .github/staircase.pub, rebuild: "true", min-cal: "2" }
+      - uses: b070nd/stAirCase@e673581e5c3a10ec3a92895e71c51faec230f2c8
+        with: { version: v1.0.0, key: .github/staircase.pub, rebuild: "true", min-cal: "2" }
