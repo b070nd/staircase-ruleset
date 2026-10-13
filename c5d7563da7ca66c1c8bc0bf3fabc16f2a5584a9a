@@ -1,0 +1,1 @@
+{"version":1,"base":"e9388c6d6fb85f9e5bb6b4751d7d5acb4578777f","proposals":[{"seq":1,"source":"policy","edits":[{"file":"SEALED.md","search_block":"(new file)","replace_block":"A change accepted after it was made (staircase seal): CAL 2.\n"}]}]}
